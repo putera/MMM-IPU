@@ -49,7 +49,6 @@ module.exports = NodeHelper.create(
 			if (r['24hour_api_apims'][i][0].toLowerCase() == state && r['24hour_api_apims'][i][1].toLowerCase() == location)
 			{
 				_ipu = r['24hour_api_apims'][i][25];
-				console.log('[MMM-IPU] IPU : ' + _ipu);
 			}
 		}
             }

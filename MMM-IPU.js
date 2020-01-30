@@ -60,7 +60,6 @@ Module.register("MMM-IPU",
 		color = 'red';
 	} else {
 		color = 'blue';
-		ipu = '-';
 	}
 
         if (data)
@@ -83,9 +82,6 @@ Module.register("MMM-IPU",
             w.className = 'small dimmed';
             w.innerHTML = this.translate("LOADING");
         }
-
-	//var w = document.createElement("div");
-	//w.innerHTML = 'test';
 
         return w;
     },

@@ -17,7 +17,8 @@ modules: [
         config: {
             // See 'Configuration options' for more information.
             state: "Perak",
-            location: "Seri Manjung"
+            location: "Seri Manjung",
+            refreshTime: 5, // in minutes
         }
     }
 ]
