@@ -32,3 +32,4 @@ The following properties can be configured:
 | `state` | Your state you wish to view |
 | `location` | Basically is your city, Please refer D.O.E Malaysia |
 | `refreshTime` | Refresh time every (*default : 5 minutes*) |
+| `hideOnStart` | Hide module on start (*default : false*) |
