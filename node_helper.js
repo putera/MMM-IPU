@@ -25,7 +25,7 @@ module.exports = NodeHelper.create(
 	var location = config.location.toLowerCase();
 
 	var dt = new Date();
-	var url = "http://apims.doe.gov.my/data/public_v2/CAQM/hours24/" + dt.getFullYear() + "/" + ('0' + (dt.getMonth())).slice(-2)  + "/" + ('0' + (dt.getDate())).slice(-2)  + "/" + ('0' + (dt.getHours())).slice(-2)  + "00.json";
+	var url = "http://apims.doe.gov.my/data/public_v2/CAQM/hours24/" + dt.getFullYear() + "/" + ('0' + (dt.getMonth()+1)).slice(-2)  + "/" + ('0' + (dt.getDate())).slice(-2)  + "/" + ('0' + (dt.getHours())).slice(-2)  + "00.json";
 
         async.parallel({
             ipu: function(callback) {
@@ -34,7 +34,6 @@ module.exports = NodeHelper.create(
                         callback(error, body);
                     }
                 });
-                console.log('[MMM-IPU] Retrieve : ' + url);
             }
     	},
         function(error, result) {
@@ -48,8 +47,8 @@ module.exports = NodeHelper.create(
 		{
 			if (r['24hour_api_apims'][i][0].toLowerCase() == state && r['24hour_api_apims'][i][1].toLowerCase() == location)
 			{
-				_ipu = r['24hour_api_apims'][i][24];
-				//_ipu = r['24hour_api_apims'][i][25];
+				//_ipu = r['24hour_api_apims'][i][24];
+				_ipu = r['24hour_api_apims'][i][25];
 			}
 		}
             }

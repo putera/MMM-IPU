@@ -8,8 +8,6 @@
 
 */
 
-'use strict';
-
 Module.register("MMM-IPU",
 {
     result: {},
@@ -18,7 +16,8 @@ Module.register("MMM-IPU",
         state: 'Perak',
         location: 'Seri Manjung',
         refreshTime: 5, // in minutes
-        animationSpeed: 2500
+        animationSpeed: 2500,
+	hideOnStart: false
     },
 
     start: function() {
@@ -43,40 +42,44 @@ Module.register("MMM-IPU",
     },
 
     getDom: function() {
+	var self = this;
         var data = this.result;
         var location = this.config.location;
         var w = document.createElement("div");
-	var ipu = data.ipu.match(/\d/g);
-	ipu = ipu.join("");
-	var color = '';
-
-	if (ipu > 50 && ipu <= 100) {
-		color = 'green';
-	} else if (ipu > 100 && ipu <= 200) {
-		color = 'yellow';
-	} else if (ipu > 200 && ipu <= 300) {
-		color = 'orange';
-	} else if (ipu > 300) {
-		color = 'red';
-	} else {
-		color = 'blue';
-	}
 
         if (data)
         {
-	    w.innerHTML = '<div style="width: 100%;">';
-	    w.innerHTML += '<div style="float:left; width:10%; background-color:'+color+';">&nbsp;</div>';
-            w.innerHTML += '<div style="float:right; width:90%" class="small bright">' + this.config.location + ', ' + this.config.state + '</div>';
-	    w.innerHTML += '</div>';
-	    w.innerHTML += '<div class="large light bright">' + ipu + '</div>';
-	    w.innerHTML += '<div style="width:100%; height: 15px !important;">';
-	    w.innerHTML += '<div style="float:left; width:20%; height: 15px !important; background-color:blue;"></div>';
-	    w.innerHTML += '<div style="float:left; width:20%; height: 15px !important; background-color:green;"></div>';
-	    w.innerHTML += '<div style="float:left; width:20%; height: 15px !important; background-color:yellow;"></div>';
-    	    w.innerHTML += '<div style="float:left; width:20%; height: 15px !important; background-color:orange;"></div>';
-	    w.innerHTML += '<div style="float:left; width:20%; height: 15px !important; background-color:red;"></div>';
-	    w.innerHTML += '</div>';
-        }
+	    var ipu = data.ipu.match(/\d/g);
+	    ipu = ipu.join("");
+	    var color = '';
+
+	    if (ipu > 50 && ipu <= 100) {
+		    color = 'green';
+	    } else if (ipu > 100 && ipu <= 200) {
+		    color = 'yellow';
+	    } else if (ipu > 200 && ipu <= 300) {
+		    color = 'orange';
+	    } else if (ipu > 300) {
+		    color = 'red';
+	    } else {
+		    color = 'blue';
+	    }
+	
+	    var div = '<div style="width: 100%;">';
+	    div += '<div style="float:left; width:10%; background-color:'+color+';">&nbsp;</div>';
+            div += '<div style="float:right; width:90%" class="small bright">' + this.config.location + ', ' + this.config.state + '</div>';
+	    div += '</div>';
+	    div += '<div class="large light bright">' + ipu + '</div>';
+	    div += '<div style="width:100%; height: 15px !important;">';
+	    div += '<div style="float:left; width:20%; height: 15px !important; background-color:blue;"></div>';
+	    div += '<div style="float:left; width:20%; height: 15px !important; background-color:green;"></div>';
+	    div += '<div style="float:left; width:20%; height: 15px !important; background-color:yellow;"></div>';
+    	    div += '<div style="float:left; width:20%; height: 15px !important; background-color:orange;"></div>';
+	    div += '<div style="float:left; width:20%; height: 15px !important; background-color:red;"></div>';
+	    div += '</div>';
+
+	    w.innerHTML = div;
+	}
         else
         {
             w.className = 'small dimmed';
@@ -93,4 +96,21 @@ Module.register("MMM-IPU",
             this.updateDom(self.config.animationSpeed);
         }
     },
+    
+    notificationReceived: function(notification, payload, sender) {
+	if (notification === "MODULE_DOM_CREATED")
+	{
+	    // Hide when module started
+	    if (this.config.hideOnStart)
+		this.hide();
+	}
+	else if (notification === "SHOW_IPU")
+	{
+	    this.show();
+	}
+	else if (notification === "HIDE_IPU")
+	{
+	    this.hide();
+	}
+    }
 });
